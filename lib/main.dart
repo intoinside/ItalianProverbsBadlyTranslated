@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -51,8 +52,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _loadData() async {
     final loadedData = await rootBundle.loadString('assets/proverbs.txt');
+
     setState(() {
-      data = LineSplitter.split(loadedData).first;
+      var splittedData = LineSplitter.split(loadedData);
+      var randNum = Random().nextInt(splittedData.length);
+
+      data = splittedData.elementAt(randNum);
     });
   }
 
