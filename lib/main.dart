@@ -1,9 +1,6 @@
-import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 void main() {
@@ -43,7 +40,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}): super(key: key);
+  const MyHomePage({super.key});
 
   @override
   State<StatefulWidget> createState() => _MyHomePageState();
@@ -53,9 +50,9 @@ class _MyHomePageState extends State<MyHomePage> {
   String? data;
 
   void _loadData() async {
-    final _loadedData = await rootBundle.loadString('assets/proverbs.txt');
+    final loadedData = await rootBundle.loadString('assets/proverbs.txt');
     setState(() {
-      data = LineSplitter.split(_loadedData).first;
+      data = LineSplitter.split(loadedData).first;
     });
   }
 
