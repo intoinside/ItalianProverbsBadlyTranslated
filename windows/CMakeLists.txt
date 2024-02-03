@@ -4,7 +4,7 @@ project(italian_proverbs_badly_translated LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
-set(BINARY_NAME "italian_proverbs_badly_translated")
+set(BINARY_NAME "Italian Proverbs Badly Translated")
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.

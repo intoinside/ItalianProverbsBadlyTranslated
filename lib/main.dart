@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Italian Proverbs Badly Translated',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       home: const MainPage(),
@@ -61,9 +60,17 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurple,
       body: Container(
-        margin: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Colors.deepPurple.shade500,
+            Colors.deepPurple.shade600,
+          ],
+        ),),
         child: Column(
           children: [
             Container(height: 125),
@@ -79,7 +86,7 @@ class _MainPageState extends State<MainPage> {
                 setState(() {
                   showItalian = !showItalian;
                 });
-              }, icon: Icon((showItalian ? Icons.arrow_circle_down_rounded : Icons.arrow_circle_up_rounded), size: 32, color: Colors.white38,),),
+              }, icon: Icon((!showItalian ? Icons.arrow_circle_down_rounded : Icons.arrow_circle_up_rounded), size: 32, color: Colors.white38,),),
             AnimatedContainer(
               duration: const Duration(milliseconds: 700),
               curve: Curves.fastOutSlowIn,
@@ -87,13 +94,12 @@ class _MainPageState extends State<MainPage> {
               width: double.infinity,
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(4),color: Colors.deepPurple.shade600,),                
               height: showItalian ? 120.0 : 0.0,
-              child: Flexible(
-                child: Text(
+              child:  Text(
                   italianProverb ?? "empty",
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.onPrimary, fontSize: 18),
                 ),
-            ),),     
+            ),     
             Container(height: 100),
           ],
         ),
