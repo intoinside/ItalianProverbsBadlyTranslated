@@ -1,4 +1,4 @@
-package com.example.italian_proverbs_badly_translated
+package com.intoinside.italian_proverbs_badly_translated
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -27,13 +28,23 @@ class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => _MainPageState();
+  State<StatefulWidget> createState() {
+    return _MainPageState();
+  } 
 }  
 
 class _MainPageState extends State<MainPage> {
   String? englishProverb;
   String? italianProverb;
   bool showItalian = false;
+  Color colorShade1 = Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
+  Color colorShade2 = Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
+  Color colorTranslation = Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
+  
+  _MainPageState() {
+    colorShade2 = Color(colorShade1.value + 20);
+    colorTranslation = Color(colorShade1.value - 10);
+  }
 
   void _loadData() async {
     final loadedData = await rootBundle.loadString('assets/proverbs.txt');
@@ -67,8 +78,8 @@ class _MainPageState extends State<MainPage> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Colors.deepPurple.shade500,
-            Colors.deepPurple.shade600,
+            colorShade1,
+            colorShade2,
           ],
         ),),
         child: Column(
@@ -92,7 +103,7 @@ class _MainPageState extends State<MainPage> {
               curve: Curves.fastOutSlowIn,
               padding: const EdgeInsets.all(4),
               width: double.infinity,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(4),color: Colors.deepPurple.shade600,),                
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(4),color: colorTranslation,),                
               height: showItalian ? 120.0 : 0.0,
               child:  Text(
                   italianProverb ?? "empty",
