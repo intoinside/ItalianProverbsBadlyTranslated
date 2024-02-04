@@ -67,7 +67,7 @@ android {
     }
     buildTypes {
         release {
-            File file = new File(keystoreProperties['storeFile'])
+            File file = new File((String)keystoreProperties['storeFile'])
             if (file.exists()) {
                 print "Sign key found"
                 signingConfig signingConfigs.release
