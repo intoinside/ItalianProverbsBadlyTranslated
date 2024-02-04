@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:italian_proverbs_badly_translated/widgets/Main_Page_Widget.dart';
+import 'package:italian_proverbs_badly_translated/widgets/main_page_widget.dart';
 
 void main() {
   runApp(const MyApp());
