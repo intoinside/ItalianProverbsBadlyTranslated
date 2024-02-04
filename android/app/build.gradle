@@ -67,9 +67,14 @@ android {
     }
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.release
+            File file = new File(keystoreProperties['storeFile'])
+            if (file.exists()) {
+                print "Sign key found"
+                signingConfig signingConfigs.release
+            } else {
+                print "Sign key not found, using debug key"
+                signingConfig signingConfigs.debug
+            }
         }
     }
 }
