@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:italian_proverbs_badly_translated/widgets/main_page_widget.dart';
+import 'package:italian_proverbs_badly_translated/screens/main_page_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         textTheme: GoogleFonts.robotoCondensedTextTheme(),
       ),
-      home: MainPageWidget(appTitle),
+      home: MainPageScreen(appTitle),
     );
   }
 }

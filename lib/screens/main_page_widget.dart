@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-class MainPageWidget extends StatefulWidget {
+class MainPageScreen extends StatefulWidget {
   final String title;
 
-  const MainPageWidget(this.title, {super.key});
+  const MainPageScreen(this.title, {super.key});
 
   @override
-  State<StatefulWidget> createState() => _MainPageWidgetState();
+  State<StatefulWidget> createState() => _MainPageScreenState();
 }
 
-class _MainPageWidgetState extends State<MainPageWidget> {
+class _MainPageScreenState extends State<MainPageScreen> {
   String? englishProverb;
   String? italianProverb;
   bool showItalian = false;
@@ -25,7 +25,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
   Color colorTranslation =
       Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
 
-  _MainPageWidgetState() {
+  _MainPageScreenState() {
     colorShade2 = Color(colorShade1.value + 20);
     colorTranslation = Color(colorShade1.value - 10);
   }
