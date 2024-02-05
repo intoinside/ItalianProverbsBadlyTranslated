@@ -52,8 +52,16 @@ class _MainPageScreenState extends State<MainPageScreen> {
     _loadData();
   }
 
+  String customReplace(
+      String text, String searchText, int replaceOn, String replaceText) {
+    Match result = searchText.allMatches(text).elementAt(replaceOn - 1);
+    return text.replaceRange(result.start, result.end, replaceText);
+  }
+
   @override
   Widget build(BuildContext context) {
+    var title = customReplace(widget.title, ' ', 2, "\n");
+
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(20),
@@ -71,19 +79,20 @@ class _MainPageScreenState extends State<MainPageScreen> {
           children: [
             Container(height: 30),
             Text(
-              widget.title,
+              title,
+              textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimary, fontSize: 20),
+                  color: Theme.of(context).colorScheme.onPrimary, fontSize: 40),
             ),
-            Container(height: 95),
+            Container(height: 100),
             Text(
               englishProverb ?? "empty",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimary, fontSize: 26),
+                  color: Theme.of(context).colorScheme.onPrimary, fontSize: 27),
             ),
             Container(
-              height: 50,
+              height: 60,
             ),
             IconButton(
               tooltip: "What does it means?",
@@ -109,13 +118,13 @@ class _MainPageScreenState extends State<MainPageScreen> {
                 borderRadius: BorderRadius.circular(4),
                 color: colorTranslation,
               ),
-              height: showItalian ? 120.0 : 0.0,
+              height: showItalian ? 150.0 : 0.0,
               child: Text(
                 italianProverb ?? "empty",
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: Theme.of(context).colorScheme.onPrimary,
-                    fontSize: 18),
+                    fontSize: 19),
               ),
             ),
             Container(height: 100),
