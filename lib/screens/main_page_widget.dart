@@ -18,16 +18,17 @@ class _MainPageScreenState extends State<MainPageScreen> {
   String? englishProverb;
   String? italianProverb;
   bool showItalian = false;
-  Color colorShade1 =
-      Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
-  Color colorShade2 =
-      Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
-  Color colorTranslation =
-      Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
+  Color? colorShade1;
+  Color? colorShade2;
+  Color? colorTranslation;
 
   _MainPageScreenState() {
-    colorShade2 = Color(colorShade1.value + 20);
-    colorTranslation = Color(colorShade1.value - 10);
+    var hour = DateTime.now().hour;
+    var x = sin(hour * pi / 24) * 56;
+
+    colorShade1 = Color.fromARGB(255, 30, 30, 60 + x.ceil());
+    colorShade2 = colorShade1!.withBlue(colorShade1!.blue + 50);
+    colorTranslation = colorShade2!.withRed(20);
   }
 
   void _loadData() async {
@@ -70,8 +71,8 @@ class _MainPageScreenState extends State<MainPageScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              colorShade1,
-              colorShade2,
+              colorShade1!,
+              colorShade2!,
             ],
           ),
         ),
