@@ -38,7 +38,7 @@ class _ProverbWidgetState extends State<ProverbWidget> {
         ),
         Container(height: 50),
         Text(
-          widget.englishProverb ?? "empty",
+          widget.englishProverb,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               color: Theme.of(context).colorScheme.onPrimary, fontSize: 27),
