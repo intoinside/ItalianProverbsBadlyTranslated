@@ -33,10 +33,10 @@ class _MainPageScreenState extends State<MainPageScreen> {
 
   _MainPageScreenState() {
     var hour = DateTime.now().hour;
-    var x = sin(hour * pi / 24) * 56;
+    var x = sin(hour * pi / 24) * 80;
 
-    colorShade1 = Color.fromARGB(255, 30, 30, 60 + x.ceil());
-    colorShade2 = colorShade1!.withBlue(colorShade1!.blue + 50);
+    colorShade1 = Color.fromARGB(255, 30, 30, 70 + x.ceil());
+    colorShade2 = colorShade1!.withBlue(colorShade1!.blue - 40);
     colorTranslation = colorShade2!.withRed(20);
   }
 
@@ -102,7 +102,7 @@ class _MainPageScreenState extends State<MainPageScreen> {
             });
           },
           foregroundColor: Theme.of(context).colorScheme.onPrimary,
-          backgroundColor: colorShade1,
+          backgroundColor: colorShade2,
           child: const Icon(Icons.share),
         ),
         body: Container(
