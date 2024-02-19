@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:italian_proverbs_badly_translated/widgets/italian_translation_widget.dart';
 import 'package:italian_proverbs_badly_translated/widgets/proverb_widget.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
@@ -70,6 +71,7 @@ class _MainPageScreenState extends State<MainPageScreen> {
   @override
   Widget build(BuildContext context) {
     var proverbWidget = ProverbWidget(widget.title, englishProverb ?? "");
+    var translationWidget = ItalianTranslationWidget(italianProverb ?? "");
 
     return Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -86,7 +88,13 @@ class _MainPageScreenState extends State<MainPageScreen> {
                         ],
                       ),
                     ),
-                    child: proverbWidget))
+                    child: Column(
+                      children: [
+                        proverbWidget,
+                        Container(height: 60),
+                        translationWidget,
+                      ],
+                    )))
                 .then((capturedImage) {
               final Uint8List bytes = capturedImage.buffer.asUint8List();
               pathOfImage!.writeAsBytes(bytes).whenComplete(
@@ -98,7 +106,7 @@ class _MainPageScreenState extends State<MainPageScreen> {
           child: const Icon(Icons.share),
         ),
         body: Container(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -137,16 +145,9 @@ class _MainPageScreenState extends State<MainPageScreen> {
                   borderRadius: BorderRadius.circular(4),
                   color: colorTranslation,
                 ),
-                height: showItalian ? 150.0 : 0.0,
-                child: Text(
-                  italianProverb ?? "empty",
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                      fontSize: 19),
-                ),
+                height: showItalian ? 120.0 : 0.0,
+                child: translationWidget,
               ),
-              Container(height: 100),
             ],
           ),
         ));
