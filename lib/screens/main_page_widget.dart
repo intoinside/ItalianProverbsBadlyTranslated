@@ -74,51 +74,70 @@ class _MainPageScreenState extends State<MainPageScreen> {
     var translationWidget = ItalianTranslationWidget(italianProverb ?? "");
 
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            screenshotController
-                .captureFromWidget(Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          colorShade1!,
-                          colorShade2!,
-                        ],
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Container(height: 100),
-                        proverbWidget,
-                        Container(height: 70),
-                        translationWidget,
-                        Container(height: 160),
-                        Text(
-                          "Check on Play Store®",
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                  fontSize: 16),
-                        ),
-                      ],
-                    )))
-                .then((capturedImage) {
-              final Uint8List bytes = capturedImage.buffer.asUint8List();
-              pathOfImage!.writeAsBytes(bytes).whenComplete(() =>
-                  Share.shareXFiles([XFile(pathOfImage!.path)],
-                      subject: "Share your proverb!",
-                      text: "Share your proverb!"));
-            });
-          },
-          foregroundColor: Theme.of(context).colorScheme.onPrimary,
-          backgroundColor: colorShade2,
-          child: const Icon(Icons.share),
+        floatingActionButton: Wrap(
+          direction: Axis.vertical,
+          children: <Widget>[
+            Container(
+                margin: const EdgeInsets.all(6),
+                child: FloatingActionButton(
+                  onPressed: () {
+                    //action code for button 1
+                  },
+                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                  backgroundColor: colorShade2,
+                  child: const Icon(Icons.favorite),
+                )),
+            Container(
+                margin: const EdgeInsets.all(6),
+                child: FloatingActionButton(
+                  onPressed: () {
+                    screenshotController
+                        .captureFromWidget(Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  colorShade1!,
+                                  colorShade2!,
+                                ],
+                              ),
+                            ),
+                            child: Column(
+                              children: [
+                                Container(height: 100),
+                                proverbWidget,
+                                Container(height: 70),
+                                translationWidget,
+                                Container(height: 160),
+                                Text(
+                                  "Check on Play Store®",
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary,
+                                          fontSize: 16),
+                                ),
+                              ],
+                            )))
+                        .then((capturedImage) {
+                      final Uint8List bytes =
+                          capturedImage.buffer.asUint8List();
+                      pathOfImage!.writeAsBytes(bytes).whenComplete(() =>
+                          Share.shareXFiles([XFile(pathOfImage!.path)],
+                              subject: "Share your proverb!",
+                              text: "Share your proverb!"));
+                    });
+                  },
+                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                  backgroundColor: colorShade2,
+                  child: const Icon(Icons.share),
+                )),
+          ],
         ),
         body: Container(
           padding: const EdgeInsets.all(16),
