@@ -47,7 +47,7 @@ class _MainPageScreenState extends State<MainPageScreen> {
       var splittedData = LineSplitter.split(loadedData);
 
       var dayOfYear = int.parse(DateFormat('D').format(DateTime.now()));
-      var randNum = dayOfYear % splittedData.length;
+      var randNum = Random(dayOfYear).nextInt(splittedData.length);
 
       var data = splittedData.elementAt(randNum);
 
