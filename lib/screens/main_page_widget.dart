@@ -36,7 +36,7 @@ class _MainPageScreenState extends State<MainPageScreen> {
     var x = sin(hour * pi / 24) * 80;
 
     colorShade1 = Color.fromARGB(255, 30, 30, 70 + x.ceil());
-    colorShade2 = colorShade1!.withBlue(colorShade1!.blue - 40);
+    colorShade2 = colorShade1!.withBlue(colorShade1!.blue - 60);
     colorTranslation = colorShade2!.withRed(20);
   }
 
@@ -58,7 +58,7 @@ class _MainPageScreenState extends State<MainPageScreen> {
 
   void _setupFolder() async {
     var directory = await getApplicationDocumentsDirectory();
-    pathOfImage = await File('${directory.path}/legendary.png').create();
+    pathOfImage = await File('${directory.path}/proverb.png').create();
   }
 
   @override
@@ -90,15 +90,30 @@ class _MainPageScreenState extends State<MainPageScreen> {
                     ),
                     child: Column(
                       children: [
+                        Container(height: 100),
                         proverbWidget,
-                        Container(height: 60),
+                        Container(height: 70),
                         translationWidget,
+                        Container(height: 160),
+                        Text(
+                          "Check on Play Store®",
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                  fontSize: 16),
+                        ),
                       ],
                     )))
                 .then((capturedImage) {
               final Uint8List bytes = capturedImage.buffer.asUint8List();
-              pathOfImage!.writeAsBytes(bytes).whenComplete(
-                  () => Share.shareXFiles([XFile(pathOfImage!.path)]));
+              pathOfImage!.writeAsBytes(bytes).whenComplete(() =>
+                  Share.shareXFiles([XFile(pathOfImage!.path)],
+                      subject: "Share your proverb!",
+                      text: "Share your proverb!"));
             });
           },
           foregroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -120,7 +135,7 @@ class _MainPageScreenState extends State<MainPageScreen> {
           child: Column(
             children: [
               proverbWidget,
-              Container(height: 80),
+              Container(height: 30),
               IconButton(
                 tooltip: "What does it means?",
                 onPressed: () {
