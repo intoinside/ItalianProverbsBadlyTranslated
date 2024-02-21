@@ -10,6 +10,7 @@ import 'package:italian_proverbs_badly_translated/widgets/proverb_widget.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainPageScreen extends StatefulWidget {
   final String title;
@@ -24,6 +25,7 @@ class _MainPageScreenState extends State<MainPageScreen> {
   String? englishProverb;
   String? italianProverb;
   bool showItalian = false;
+  bool alreadyFaved = false;
   Color? colorShade1;
   Color? colorShade2;
   Color? colorTranslation;
@@ -42,6 +44,7 @@ class _MainPageScreenState extends State<MainPageScreen> {
 
   void _loadData() async {
     final loadedData = await rootBundle.loadString('assets/proverbs.txt');
+    final prefs = await SharedPreferences.getInstance();
 
     setState(() {
       var splittedData = LineSplitter.split(loadedData);
@@ -53,6 +56,8 @@ class _MainPageScreenState extends State<MainPageScreen> {
 
       englishProverb = data.split('-').first;
       italianProverb = data.split('-').last;
+
+      alreadyFaved = prefs.getBool(englishProverb!) ?? false;
     });
   }
 
@@ -68,6 +73,20 @@ class _MainPageScreenState extends State<MainPageScreen> {
     _setupFolder();
   }
 
+  Future<void> _favoritePressed() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      alreadyFaved = prefs.getBool(englishProverb!) ?? false;
+      if (alreadyFaved) {
+        prefs.setBool(englishProverb!, false);
+      } else {
+        prefs.setBool(englishProverb!, true);
+      }
+      alreadyFaved = !alreadyFaved;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var proverbWidget = ProverbWidget(widget.title, englishProverb ?? "");
@@ -80,12 +99,12 @@ class _MainPageScreenState extends State<MainPageScreen> {
             Container(
                 margin: const EdgeInsets.all(6),
                 child: FloatingActionButton(
-                  onPressed: () {
-                    //action code for button 1
-                  },
+                  onPressed: _favoritePressed,
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   backgroundColor: colorShade2,
-                  child: const Icon(Icons.favorite),
+                  tooltip: alreadyFaved ? "Remove from fav" : "Add to fav",
+                  child: Icon(
+                      alreadyFaved ? Icons.favorite : Icons.favorite_border),
                 )),
             Container(
                 margin: const EdgeInsets.all(6),
