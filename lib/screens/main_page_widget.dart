@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:italian_proverbs_badly_translated/widgets/italian_translation_widget.dart';
 import 'package:italian_proverbs_badly_translated/widgets/proverb_widget.dart';
+import 'package:overlay_toast_message/overlay_toast_message.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
@@ -84,6 +85,13 @@ class _MainPageScreenState extends State<MainPageScreen> {
         prefs.setBool(englishProverb!, true);
       }
       alreadyFaved = !alreadyFaved;
+
+      OverlayToastMessage.show(
+        context,
+        dismissAll: true,
+        textMessage:
+            alreadyFaved ? "Added to favorite" : "Removed from favorite",
+      );
     });
   }
 
