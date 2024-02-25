@@ -5,6 +5,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:italian_proverbs_badly_translated/config.dart';
+import 'package:italian_proverbs_badly_translated/widgets/drawer_widget.dart';
 import 'package:italian_proverbs_badly_translated/widgets/italian_translation_widget.dart';
 import 'package:italian_proverbs_badly_translated/widgets/proverb_widget.dart';
 import 'package:overlay_toast_message/overlay_toast_message.dart';
@@ -14,9 +16,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainPageScreen extends StatefulWidget {
-  final String title;
-
-  const MainPageScreen(this.title, {super.key});
+  const MainPageScreen({super.key});
 
   @override
   State<StatefulWidget> createState() => _MainPageScreenState();
@@ -27,21 +27,11 @@ class _MainPageScreenState extends State<MainPageScreen> {
   String? italianProverb;
   bool showItalian = false;
   bool alreadyFaved = false;
-  Color? colorShade1;
-  Color? colorShade2;
-  Color? colorTranslation;
   File? pathOfImage;
 
   ScreenshotController screenshotController = ScreenshotController();
 
-  _MainPageScreenState() {
-    var hour = DateTime.now().hour;
-    var x = sin(hour * pi / 24) * 80;
-
-    colorShade1 = Color.fromARGB(255, 30, 30, 70 + x.ceil());
-    colorShade2 = colorShade1!.withBlue(colorShade1!.blue - 60);
-    colorTranslation = colorShade2!.withRed(20);
-  }
+  _MainPageScreenState();
 
   void _loadData() async {
     final loadedData = await rootBundle.loadString('assets/proverbs.txt');
@@ -53,12 +43,12 @@ class _MainPageScreenState extends State<MainPageScreen> {
       var dayOfYear = int.parse(DateFormat('D').format(DateTime.now()));
       var randNum = Random(dayOfYear).nextInt(splittedData.length);
 
-      var data = splittedData.elementAt(randNum);
+      var proverb = splittedData.elementAt(randNum);
 
-      englishProverb = data.split('-').first;
-      italianProverb = data.split('-').last;
+      englishProverb = proverb.split('-').first;
+      italianProverb = proverb.split('-').last;
 
-      alreadyFaved = prefs.getBool(englishProverb!) ?? false;
+      alreadyFaved = prefs.getBool(proverb) ?? false;
     });
   }
 
@@ -78,11 +68,13 @@ class _MainPageScreenState extends State<MainPageScreen> {
     final prefs = await SharedPreferences.getInstance();
 
     setState(() {
-      alreadyFaved = prefs.getBool(englishProverb!) ?? false;
+      var fullProverb = "$englishProverb-$italianProverb";
+
+      alreadyFaved = prefs.getBool(fullProverb) ?? false;
       if (alreadyFaved) {
-        prefs.setBool(englishProverb!, false);
+        prefs.setBool(fullProverb, false);
       } else {
-        prefs.setBool(englishProverb!, true);
+        prefs.setBool(fullProverb, true);
       }
       alreadyFaved = !alreadyFaved;
 
@@ -97,36 +89,41 @@ class _MainPageScreenState extends State<MainPageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var proverbWidget = ProverbWidget(widget.title, englishProverb ?? "");
+    var proverbWidget = ProverbWidget(englishProverb ?? "");
     var translationWidget = ItalianTranslationWidget(italianProverb ?? "");
 
     return Scaffold(
+        drawer: const DrawerWidget(),
         floatingActionButton: Wrap(
           direction: Axis.vertical,
           children: <Widget>[
             Container(
                 margin: const EdgeInsets.all(6),
                 child: FloatingActionButton(
+                  heroTag: "FavBtn",
                   onPressed: _favoritePressed,
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                  backgroundColor: colorShade2,
-                  tooltip: alreadyFaved ? "Remove from fav" : "Add to fav",
+                  backgroundColor: Config.colorShade2,
+                  tooltip:
+                      alreadyFaved ? "Remove from favorite" : "Add to favorite",
                   child: Icon(
                       alreadyFaved ? Icons.favorite : Icons.favorite_border),
                 )),
             Container(
                 margin: const EdgeInsets.all(6),
                 child: FloatingActionButton(
+                  heroTag: "Share",
                   onPressed: () {
                     screenshotController
+                        // TODO: extract sharing image generation
                         .captureFromWidget(Container(
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                                 colors: [
-                                  colorShade1!,
-                                  colorShade2!,
+                                  Config.colorShade1,
+                                  Config.colorShade2,
                                 ],
                               ),
                             ),
@@ -161,7 +158,7 @@ class _MainPageScreenState extends State<MainPageScreen> {
                     });
                   },
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                  backgroundColor: colorShade2,
+                  backgroundColor: Config.colorShade2,
                   child: const Icon(Icons.share),
                 )),
           ],
@@ -173,8 +170,8 @@ class _MainPageScreenState extends State<MainPageScreen> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                colorShade1!,
-                colorShade2!,
+                Config.colorShade1,
+                Config.colorShade2,
               ],
             ),
           ),
@@ -204,7 +201,7 @@ class _MainPageScreenState extends State<MainPageScreen> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4),
-                  color: colorTranslation,
+                  color: Config.colorTranslation,
                 ),
                 height: showItalian ? 120.0 : 0.0,
                 child: translationWidget,
