@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:italian_proverbs_badly_translated/config.dart';
-import 'package:italian_proverbs_badly_translated/widgets/drawer_widget.dart';
 import 'package:overlay_toast_message/overlay_toast_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class FavoriteScreen extends StatefulWidget {
-  const FavoriteScreen({super.key});
+class FavoriteWidget extends StatefulWidget {
+  const FavoriteWidget({super.key});
 
   @override
-  State<StatefulWidget> createState() => _FavoriteScreenState();
+  State<StatefulWidget> createState() => _FavoriteWidgetState();
 }
 
-class _FavoriteScreenState extends State<FavoriteScreen> {
+class _FavoriteWidgetState extends State<FavoriteWidget> {
   final String headerKey = "HEADER";
 
   Map<String, bool> favMap = <String, bool>{};
 
-  _FavoriteScreenState();
+  _FavoriteWidgetState();
 
   @override
   void initState() {
@@ -45,54 +44,50 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const DrawerWidget(),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Config.colorShade1,
-              Config.colorShade2,
-            ],
-          ),
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Config.colorShade1,
+            Config.colorShade2,
+          ],
         ),
-        padding: const EdgeInsets.fromLTRB(8, 40, 8, 24),
-        child: favMap.isNotEmpty
-            ? ListView.builder(
-                itemCount: favMap.length,
-                itemBuilder: (BuildContext context, int index) {
-                  String key = favMap.keys.elementAt(index);
-
-                  if (key == headerKey) {
-                    return Text("Favorite list",
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimary,
-                            fontSize: 26));
-                  } else {
-                    return Column(
-                      children: [
-                        FavoriteItem(
-                          proverb: key,
-                          isCurrentlyFav: favMap[key] ?? false,
-                        ),
-                        const Divider(),
-                      ],
-                    );
-                  }
-                },
-                padding: const EdgeInsets.all(8),
-              )
-            : Text(
-                "No favorite proverbs collected",
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    fontSize: 20),
-              ),
       ),
+      padding: const EdgeInsets.fromLTRB(8, 40, 8, 24),
+      child: favMap.isNotEmpty
+          ? ListView.builder(
+              itemCount: favMap.length,
+              itemBuilder: (BuildContext context, int index) {
+                String key = favMap.keys.elementAt(index);
+
+                if (key == headerKey) {
+                  return Text("Favorite list",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontSize: 26));
+                } else {
+                  return Column(
+                    children: [
+                      FavoriteItem(
+                        proverb: key,
+                        isCurrentlyFav: favMap[key] ?? false,
+                      ),
+                      const Divider(),
+                    ],
+                  );
+                }
+              },
+              padding: const EdgeInsets.all(8),
+            )
+          : Text(
+              "No favorite proverbs collected",
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.onPrimary, fontSize: 20),
+            ),
     );
   }
 }

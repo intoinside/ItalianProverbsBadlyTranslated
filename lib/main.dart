@@ -3,13 +3,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:italian_proverbs_badly_translated/config.dart';
-import 'package:italian_proverbs_badly_translated/screens/main_page_widget.dart';
+import 'package:italian_proverbs_badly_translated/screens/main.dart';
+import 'package:italian_proverbs_badly_translated/components/daily_proverb.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   MyApp({super.key}) {
     _detectColors();
   }
@@ -25,18 +26,6 @@ class MyApp extends StatefulWidget {
   }
 
   @override
-  State<StatefulWidget> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  _MyAppState();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: Config.appTitle,
@@ -44,7 +33,7 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
         textTheme: GoogleFonts.robotoCondensedTextTheme(),
       ),
-      home: const MainPageScreen(),
+      home: Main(),
     );
   }
 }

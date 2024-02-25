@@ -6,23 +6,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:italian_proverbs_badly_translated/config.dart';
-import 'package:italian_proverbs_badly_translated/widgets/drawer_widget.dart';
-import 'package:italian_proverbs_badly_translated/widgets/italian_translation_widget.dart';
-import 'package:italian_proverbs_badly_translated/widgets/proverb_widget.dart';
+import 'package:italian_proverbs_badly_translated/components/italian_translation_widget.dart';
+import 'package:italian_proverbs_badly_translated/components/proverb_widget.dart';
 import 'package:overlay_toast_message/overlay_toast_message.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MainPageScreen extends StatefulWidget {
-  const MainPageScreen({super.key});
+class DailyProverbWidget extends StatefulWidget {
+  const DailyProverbWidget({super.key});
 
   @override
-  State<StatefulWidget> createState() => _MainPageScreenState();
+  State<StatefulWidget> createState() => _DailyProverbWidgetState();
 }
 
-class _MainPageScreenState extends State<MainPageScreen> {
+class _DailyProverbWidgetState extends State<DailyProverbWidget> {
   String? englishProverb;
   String? italianProverb;
   bool showItalian = false;
@@ -31,7 +30,7 @@ class _MainPageScreenState extends State<MainPageScreen> {
 
   ScreenshotController screenshotController = ScreenshotController();
 
-  _MainPageScreenState();
+  _DailyProverbWidgetState();
 
   void _loadData() async {
     final loadedData = await rootBundle.loadString('assets/proverbs.txt');
@@ -93,7 +92,6 @@ class _MainPageScreenState extends State<MainPageScreen> {
     var translationWidget = ItalianTranslationWidget(italianProverb ?? "");
 
     return Scaffold(
-        drawer: const DrawerWidget(),
         floatingActionButton: Wrap(
           direction: Axis.vertical,
           children: <Widget>[
