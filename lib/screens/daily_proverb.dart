@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:italian_proverbs_badly_translated/components/drawer_widget.dart';
 import 'package:italian_proverbs_badly_translated/config.dart';
 import 'package:italian_proverbs_badly_translated/components/italian_translation_widget.dart';
 import 'package:italian_proverbs_badly_translated/components/proverb_widget.dart';
@@ -14,14 +15,14 @@ import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class DailyProverbWidget extends StatefulWidget {
-  const DailyProverbWidget({super.key});
+class DailyProverbScreen extends StatefulWidget {
+  const DailyProverbScreen({super.key});
 
   @override
   State<StatefulWidget> createState() => _DailyProverbWidgetState();
 }
 
-class _DailyProverbWidgetState extends State<DailyProverbWidget> {
+class _DailyProverbWidgetState extends State<DailyProverbScreen> {
   String? englishProverb;
   String? italianProverb;
   bool showItalian = false;
@@ -92,6 +93,7 @@ class _DailyProverbWidgetState extends State<DailyProverbWidget> {
     var translationWidget = ItalianTranslationWidget(italianProverb ?? "");
 
     return Scaffold(
+        drawer: const DrawerWidget(selectedIndex: 0),
         floatingActionButton: Wrap(
           direction: Axis.vertical,
           children: <Widget>[

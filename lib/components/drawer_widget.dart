@@ -1,17 +1,78 @@
 import 'package:flutter/material.dart';
+import 'package:italian_proverbs_badly_translated/screens/daily_proverb.dart';
+import 'package:italian_proverbs_badly_translated/screens/favorite_widget.dart';
 import 'package:italian_proverbs_badly_translated/config.dart';
 import 'package:italian_proverbs_badly_translated/utils.dart';
 
-class DrawerWidget extends StatelessWidget {
-  final List<Widget> listTile;
+class DrawerWidget extends StatefulWidget {
+  final int selectedIndex;
+  const DrawerWidget({super.key, required this.selectedIndex});
 
-  const DrawerWidget({super.key, required this.listTile});
+  @override
+  State<StatefulWidget> createState() => _DrawerWidgetState();
+}
+
+class _DrawerWidgetState extends State<DrawerWidget> {
+  int _selectedIndex = 0;
+
+  static const List<Widget> _widgetOptions = <Widget>[
+    DailyProverbScreen(),
+    FavoriteScreen(),
+  ];
+
+  _DrawerWidgetState();
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    _selectedIndex = widget.selectedIndex;
     var title = Utils.customReplace(Config.appTitle, ' ', 2, "\n");
 
-    List<Widget> childrenList = List.from(listTile);
+    List<Widget> childrenList = [
+      ListTile(
+        title: Text(
+          'Proverb of the day',
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              color: Theme.of(context).colorScheme.onPrimary, fontSize: 20),
+        ),
+        selected: _selectedIndex == 0,
+        onTap: () {
+          Navigator.pop(context);
+          if (_selectedIndex != 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => _widgetOptions[_selectedIndex]),
+            );
+          }
+          _onItemTapped(0);
+        },
+      ),
+      ListTile(
+        title: Text(
+          'My favorite proverbs',
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              color: Theme.of(context).colorScheme.onPrimary, fontSize: 20),
+        ),
+        selected: _selectedIndex == 1,
+        onTap: () {
+          Navigator.pop(context);
+          if (_selectedIndex != 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => _widgetOptions[_selectedIndex]),
+            );
+          }
+          _onItemTapped(1);
+        },
+      )
+    ];
     childrenList.insert(
         0,
         DrawerHeader(

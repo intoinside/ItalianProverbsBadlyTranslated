@@ -3,8 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:italian_proverbs_badly_translated/config.dart';
-import 'package:italian_proverbs_badly_translated/screens/main.dart';
-import 'package:italian_proverbs_badly_translated/components/daily_proverb.dart';
+import 'package:italian_proverbs_badly_translated/screens/daily_proverb.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,7 +32,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         textTheme: GoogleFonts.robotoCondensedTextTheme(),
       ),
-      home: Main(),
+      home: const DailyProverbScreen(),
     );
   }
 }
