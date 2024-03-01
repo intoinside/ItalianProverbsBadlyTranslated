@@ -7,3 +7,5 @@ class Config {
   static Color colorShade2 = Colors.black;
   static Color colorTranslation = Colors.black;
 }
+
+final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();

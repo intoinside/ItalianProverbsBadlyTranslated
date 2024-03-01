@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: Config.appTitle,
+      navigatorObservers: [routeObserver],
       theme: ThemeData(
         useMaterial3: true,
         textTheme: GoogleFonts.robotoCondensedTextTheme(),

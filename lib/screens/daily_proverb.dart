@@ -22,7 +22,8 @@ class DailyProverbScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _DailyProverbWidgetState();
 }
 
-class _DailyProverbWidgetState extends State<DailyProverbScreen> {
+class _DailyProverbWidgetState extends State<DailyProverbScreen>
+    with RouteAware {
   String? englishProverb;
   String? italianProverb;
   bool showItalian = false;
@@ -32,6 +33,37 @@ class _DailyProverbWidgetState extends State<DailyProverbScreen> {
   ScreenshotController screenshotController = ScreenshotController();
 
   _DailyProverbWidgetState();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      routeObserver.subscribe(this, ModalRoute.of(context)!);
+    });
+    super.initState();
+    _loadData();
+    _setupFolder();
+  }
+
+  @override
+  void didPop() {
+    _setInitialFavStatus();
+    super.didPop();
+  }
+
+  @override
+  void didPopNext() {
+    _setInitialFavStatus();
+    super.didPopNext();
+  }
+
+  void _setInitialFavStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      var fullProverb = "$englishProverb-$italianProverb";
+
+      alreadyFaved = prefs.getBool(fullProverb) ?? false;
+    });
+  }
 
   void _loadData() async {
     final loadedData = await rootBundle.loadString('assets/proverbs.txt');
@@ -55,13 +87,6 @@ class _DailyProverbWidgetState extends State<DailyProverbScreen> {
   void _setupFolder() async {
     var directory = await getApplicationDocumentsDirectory();
     pathOfImage = await File('${directory.path}/proverb.png').create();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _loadData();
-    _setupFolder();
   }
 
   Future<void> _favoritePressed() async {
