@@ -24,7 +24,6 @@ class _ProverbWidgetState extends State<ProverbWidget> {
 
     return Column(
       children: [
-        Container(height: 36),
         Text(
           title,
           textAlign: TextAlign.center,

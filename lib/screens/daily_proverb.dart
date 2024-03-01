@@ -24,6 +24,7 @@ class DailyProverbScreen extends StatefulWidget {
 
 class _DailyProverbWidgetState extends State<DailyProverbScreen>
     with RouteAware {
+  var scaffoldKey = GlobalKey<ScaffoldState>();
   String? englishProverb;
   String? italianProverb;
   bool showItalian = false;
@@ -119,6 +120,7 @@ class _DailyProverbWidgetState extends State<DailyProverbScreen>
 
     return Scaffold(
         drawer: const DrawerWidget(selectedIndex: 0),
+        key: scaffoldKey,
         floatingActionButton: Wrap(
           direction: Axis.vertical,
           children: <Widget>[
@@ -202,6 +204,16 @@ class _DailyProverbWidgetState extends State<DailyProverbScreen>
           ),
           child: Column(
             children: [
+              Container(height: 18),
+              Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  onPressed: () => scaffoldKey.currentState!.openDrawer(),
+                  icon: const Icon(Icons.arrow_right_alt),
+                ),
+              ),
+              Container(height: 16),
               proverbWidget,
               Container(height: 30),
               IconButton(
