@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:italian_proverbs_badly_translated/components/drawer_widget.dart';
+import 'package:italian_proverbs_badly_translated/components/sharing_widget.dart';
 import 'package:italian_proverbs_badly_translated/config.dart';
 import 'package:italian_proverbs_badly_translated/components/italian_translation_widget.dart';
 import 'package:italian_proverbs_badly_translated/components/proverb_widget.dart';
@@ -142,39 +143,9 @@ class _DailyProverbWidgetState extends State<DailyProverbScreen>
                   heroTag: "Share",
                   onPressed: () {
                     screenshotController
-                        // TODO: extract sharing image generation
-                        .captureFromWidget(Container(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  Config.colorShade1,
-                                  Config.colorShade2,
-                                ],
-                              ),
-                            ),
-                            child: Column(
-                              children: [
-                                Container(height: 100),
-                                proverbWidget,
-                                Container(height: 70),
-                                translationWidget,
-                                Container(height: 160),
-                                Text(
-                                  "Check on Play Store®",
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary,
-                                          fontSize: 16),
-                                ),
-                              ],
-                            )))
+                        .captureFromWidget(SharingWidget(
+                            proverbWidget: proverbWidget,
+                            translationWidget: translationWidget))
                         .then((capturedImage) {
                       final Uint8List bytes =
                           capturedImage.buffer.asUint8List();

@@ -9,6 +9,7 @@
 .history
 .svn/
 migrate_working_dir/
+.vscode/*
 
 # IntelliJ related
 *.iml
@@ -41,3 +42,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+linux/flutter/generated*
+macos/flutter/generated*
+macos/Flutter/Generated*
+windows/flutter/generated*
