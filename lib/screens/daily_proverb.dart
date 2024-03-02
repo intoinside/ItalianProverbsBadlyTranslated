@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:animate_gradient/animate_gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -161,61 +162,65 @@ class _DailyProverbWidgetState extends State<DailyProverbScreen>
                 )),
           ],
         ),
-        body: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Config.colorShade1,
-                Config.colorShade2,
-              ],
-            ),
-          ),
-          child: Column(
-            children: [
-              Container(height: 18),
-              Align(
-                alignment: Alignment.topLeft,
-                child: IconButton(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  onPressed: () => scaffoldKey.currentState!.openDrawer(),
-                  icon: const Icon(Icons.arrow_right_alt),
-                ),
-              ),
-              Container(height: 16),
-              proverbWidget,
-              Container(height: 30),
-              IconButton(
-                tooltip: "What does it means?",
-                onPressed: () {
-                  setState(() {
-                    showItalian = !showItalian;
-                  });
-                },
-                icon: Icon(
-                  (!showItalian
-                      ? Icons.arrow_circle_down_rounded
-                      : Icons.arrow_circle_up_rounded),
-                  size: 32,
-                  color: Colors.white38,
-                ),
-              ),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 700),
-                curve: Curves.fastOutSlowIn,
-                padding: const EdgeInsets.all(4),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  color: Config.colorTranslation,
-                ),
-                height: showItalian ? 120.0 : 0.0,
-                child: translationWidget,
-              ),
+        body: AnimateGradient(
+            duration: const Duration(seconds: 20),
+            primaryBegin: Alignment.topCenter,
+            primaryEnd: Alignment.topCenter,
+            secondaryBegin: Alignment.bottomCenter,
+            secondaryEnd: Alignment.bottomCenter,
+            primaryColors: const [
+              Color.fromARGB(255, 27, 38, 156),
+              Colors.indigo,
             ],
-          ),
-        ));
+            secondaryColors: [
+              Config.colorShade1,
+              Config.colorShade2,
+            ],
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  Container(height: 18),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: IconButton(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      onPressed: () => scaffoldKey.currentState!.openDrawer(),
+                      icon: const Icon(Icons.arrow_right_alt),
+                    ),
+                  ),
+                  Container(height: 14),
+                  proverbWidget,
+                  Container(height: 16),
+                  IconButton(
+                    tooltip: "What does it means?",
+                    onPressed: () {
+                      setState(() {
+                        showItalian = !showItalian;
+                      });
+                    },
+                    icon: Icon(
+                      (!showItalian
+                          ? Icons.arrow_circle_down_rounded
+                          : Icons.arrow_circle_up_rounded),
+                      size: 32,
+                      color: Colors.white38,
+                    ),
+                  ),
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 700),
+                    curve: Curves.fastOutSlowIn,
+                    padding: const EdgeInsets.all(4),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      color: Config.colorTranslation,
+                    ),
+                    height: showItalian ? 120.0 : 0.0,
+                    child: translationWidget,
+                  ),
+                ],
+              ),
+            )));
   }
 }
