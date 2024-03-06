@@ -26,12 +26,16 @@ class _FavoriteItemWidgetState extends State<FavoriteItemWidget> {
     isCurrentlyFav = widget.isCurrentlyFav;
   }
 
-  String _writeFullProverb(String proverb) {
+  String _writeEnglishProverb(String proverb) {
+    return proverb.split('-').first;
+  }
+
+  String _writeItalianProverb(String proverb) {
     String englishProverb = proverb.split('-').first;
     String italianProverb = proverb.split('-').last;
 
     if (englishProverb == italianProverb) italianProverb = "";
-    return "$englishProverb\n$italianProverb";
+    return italianProverb;
   }
 
   Future<void> _updateFavoriteStatus() async {
@@ -75,9 +79,16 @@ class _FavoriteItemWidgetState extends State<FavoriteItemWidget> {
               ),
             ),
       title: Text(
-        _writeFullProverb(proverb!),
+        _writeEnglishProverb(proverb!),
         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
             color: Theme.of(context).colorScheme.onPrimary, fontSize: 20),
+      ),
+      subtitle: Text(
+        _writeItalianProverb(proverb!),
+        style: Theme.of(context)
+            .textTheme
+            .bodyMedium!
+            .copyWith(color: Colors.white38, fontSize: 18),
       ),
       onTap: _updateFavoriteStatus,
     );
