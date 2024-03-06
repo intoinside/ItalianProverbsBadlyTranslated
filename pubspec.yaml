@@ -44,6 +44,7 @@ dependencies:
   shared_preferences: ^2.2.2
   overlay_toast_message: ^1.0.2
   animate_gradient: ^0.0.2+1
+  package_info_plus: ^5.0.1
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
@@ -72,6 +73,7 @@ flutter_launcher_icons:
 flutter:
   assets:
     - assets/proverbs.txt
+    - assets/icon/icon.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
