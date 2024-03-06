@@ -3,6 +3,7 @@ import 'package:italian_proverbs_badly_translated/screens/daily_proverb.dart';
 import 'package:italian_proverbs_badly_translated/screens/favorite_widget.dart';
 import 'package:italian_proverbs_badly_translated/config.dart';
 import 'package:italian_proverbs_badly_translated/utils.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class DrawerWidget extends StatefulWidget {
   final int selectedIndex;
@@ -14,6 +15,14 @@ class DrawerWidget extends StatefulWidget {
 
 class _DrawerWidgetState extends State<DrawerWidget> {
   int _selectedIndex = 0;
+  PackageInfo _packageInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: 'Unknown',
+    buildNumber: 'Unknown',
+    buildSignature: 'Unknown',
+    installerStore: 'Unknown',
+  );
 
   static const List<Widget> _widgetOptions = <Widget>[
     DailyProverbScreen(),
@@ -21,6 +30,19 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   ];
 
   _DrawerWidgetState();
+
+  @override
+  void initState() {
+    super.initState();
+    _initPackageInfo();
+  }
+
+  Future<void> _initPackageInfo() async {
+    final info = await PackageInfo.fromPlatform();
+    setState(() {
+      _packageInfo = info;
+    });
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -71,7 +93,27 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           }
           _onItemTapped(1);
         },
-      )
+      ),
+      const Divider(),
+      ListTile(
+          title: Text(
+            'About',
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                color: Theme.of(context).colorScheme.onPrimary, fontSize: 20),
+          ),
+          onTap: () {
+            showAboutDialog(
+              context: context,
+              applicationIcon: Image.asset("assets/icon/icon.png", height: 32),
+              applicationName: Config.appTitle,
+              applicationVersion: _packageInfo.version,
+              children: <Widget>[
+                const Padding(
+                    padding: EdgeInsets.only(top: 15),
+                    child: Text('For complaining send me an email'))
+              ],
+            );
+          })
     ];
     childrenList.insert(
         0,
