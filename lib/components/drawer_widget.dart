@@ -104,13 +104,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           onTap: () {
             showAboutDialog(
               context: context,
-              applicationIcon: Image.asset("assets/icon/icon.png", height: 32),
+              applicationIcon: Image.asset("assets/icon/icon.png", height: 44),
               applicationName: Config.appTitle,
               applicationVersion: _packageInfo.version,
               children: <Widget>[
                 const Padding(
                     padding: EdgeInsets.only(top: 15),
-                    child: Text('For complaining send me an email'))
+                    child: Text(
+                        'Author: Raffaele Intorcia\nFor complaining send me an email'))
               ],
             );
           })
