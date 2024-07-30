@@ -4,6 +4,7 @@ import 'package:italian_proverbs_badly_translated/screens/favorite_widget.dart';
 import 'package:italian_proverbs_badly_translated/config.dart';
 import 'package:italian_proverbs_badly_translated/utils.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DrawerWidget extends StatefulWidget {
   final int selectedIndex;
@@ -109,9 +110,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               applicationVersion: _packageInfo.version,
               children: <Widget>[
                 const Padding(
-                    padding: EdgeInsets.only(top: 15),
+                    padding: EdgeInsets.only(top: 15, bottom: 10),
                     child: Text(
-                        'Author: Raffaele Intorcia\nFor complaining send me an email'))
+                        'Author: Raffaele Intorcia\nFor complaining send me an email')),
+                InkWell(
+                    child:
+                        const Text('Suggest a new proverb \u{1F30E}\u{2192}'),
+                    onTap: () => launchUrl(Uri.parse(
+                        'https://github.com/intoinside/ItalianProverbsBadlyTranslated/issues/new'))),
               ],
             );
           })
