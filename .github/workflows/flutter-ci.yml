@@ -25,7 +25,7 @@ jobs:
     - uses: subosito/flutter-action@v2
       with:
         # channel: 'beta' # 'dev', 'alpha', default to: 'stable'
-        flutter-version: '3.22.3' # you can also specify exact version of flutter
+        flutter-version: '3.32.5' # you can also specify exact version of flutter
     
     # Get flutter dependencies.
     - run: flutter pub get
@@ -43,7 +43,7 @@ jobs:
     - run: flutter build appbundle
     
     # Upload generated apk to the artifacts.
-    - uses: actions/upload-artifact@v1
+    - uses: actions/upload-artifact@v4
       with:
         name: release-aab
         path: build/app/outputs/bundle/release/app-release.aab

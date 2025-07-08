@@ -16,3 +16,10 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    compileSdkVersion = 36
+    minSdkVersion = 26
+    targetSdkVersion = 36
+    ndkVersion = "29.0.13599879"
+}
